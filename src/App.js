@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import List from "./List";
+import people from "./data";
+import { Paper, Container, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./mui/theme";
+import { GreenBtn } from "./mui/MyButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [birthdayPips, setBirthdayPips] = useState(people);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeProvider theme={theme}>
+      <Container
+        sx={{
+          width: "100%",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper
+          elevation={2}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            p: 2,
+            width: "45%",
+            bgcolor: theme.palette.primary.main,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Typography
+            color="#fff"
+            variant="h3"
+            align="center"
+            sx={{ my: 2 }}
+          >{`${birthdayPips.length} birthdays today`}</Typography>
+          <List people={birthdayPips} />
+          <GreenBtn
+            variant="contained"
+            endIcon={<DeleteIcon />}
+            onClick={() => {
+              setBirthdayPips([]);
+            }}
+          >
+            Clear
+          </GreenBtn>
+        </Paper>
+      </Container>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
